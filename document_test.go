@@ -1,12 +1,10 @@
 package hocr_test
 
 import (
-	"os"
 	"path/filepath"
 	"testing"
 
 	hocr "github.com/eslider/go-hocr"
-	"github.com/eslider/go-hocr/legacy"
 )
 
 func TestReadFile(t *testing.T) {
@@ -40,20 +38,5 @@ func TestReadFile(t *testing.T) {
 	}
 	if yaml == "" {
 		t.Fatal("expected non-empty YAML")
-	}
-}
-
-func TestLegacyParse(t *testing.T) {
-	b, err := os.ReadFile(filepath.Join("testdata", "sample.hocr"))
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	h, err := legacy.Parse(b)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(h.Pages) == 0 {
-		t.Fatal("expected pages")
 	}
 }

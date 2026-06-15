@@ -25,16 +25,17 @@ func (d *Document) ToYaml() (string, error) {
 	return string(jsonBytes), nil
 }
 
-// ToHtml export HTML as string.
+// ToHtml exports positioned HTML for the given 1-based page number.
 func (d *Document) ToHtml(pageNr int) (string, error) {
-	if d.Pages == nil || len(d.Pages) < pageNr-1 {
-		return "", fmt.Errorf("no pages found")
+	if pageNr < 1 || d.Pages == nil || pageNr > len(d.Pages) {
+		return "", fmt.Errorf("page %d not found (%d pages)", pageNr, len(d.Pages))
 	}
 
 	//html := fmt.Sprintf(`<div>%s</div>`, d.Pages[pageNr-1].GetHtml())
 	return d.Pages[pageNr-1].GetHtml(), nil
 }
 
+// ReadFile parses an hOCR file from disk into a Document.
 func ReadFile(path string) (*Document, error) {
 	b, err := os.ReadFile(path)
 	if err != nil {
@@ -49,6 +50,7 @@ func ReadFile(path string) (*Document, error) {
 	return NewDocument(doc), err
 }
 
+// NewDocument builds a Document from parsed v1_2 XML types.
 func NewDocument(doc *v1_2.Document) *Document {
 	d := new(Document)
 	d.Title = doc.Title
