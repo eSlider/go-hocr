@@ -46,7 +46,7 @@ graph TB
 ## Installation
 
 ```bash
-go get github.com/eslider/go-hocr@v0.2.0
+go get github.com/eslider/go-hocr@latest
 ```
 
 **System dependency** (to produce hOCR files):
