@@ -43,7 +43,7 @@ func (b *Block) ToMarkdown(minConf float32) string {
 		return "---"
 	}
 	if b.IsPhoto() {
-		return "![photo]()"
+		return "" // skip empty photo placeholders in Markdown export
 	}
 	var parts []string
 	for _, p := range b.Paragraphs {
