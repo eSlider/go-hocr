@@ -35,13 +35,36 @@ type Page struct {
 
 // NewPage by given specification v1_2.Element
 func NewPage(page *v1_2.Element) *Page {
+	// A well-formed page holds ocr_carea blocks. Some engines/PSM modes skip
+	// the carea wrapper and place ocr_par, ocr_line or ocrx_word directly under
+	// ocr_page; wrap those into an equivalent content-area block.
 	var blocks []*Block
+	var orphanParagraphs []*Paragraph
+	var orphanLines []*Line
+	var orphanWords []*Word
 	for _, sub := range page.GetElements() {
-		if sub.IsBlock() {
+		switch {
+		case sub.IsBlock():
 			blocks = append(blocks, NewBlock(sub))
-		} else {
+		case sub.IsParagraph():
+			orphanParagraphs = append(orphanParagraphs, NewParagraph(sub))
+		case sub.IsLine():
+			orphanLines = append(orphanLines, NewLine(sub))
+		case sub.IsWord():
+			orphanWords = append(orphanWords, NewWord(sub))
+		default:
 			fmt.Println("Found not a block in page", sub)
 		}
+	}
+	if len(orphanParagraphs) > 0 || len(orphanLines) > 0 || len(orphanWords) > 0 {
+		block := &Block{
+			Element:    Element{Class: ContentAreaBlock},
+			Paragraphs: orphanParagraphs,
+		}
+		if len(orphanLines) > 0 || len(orphanWords) > 0 {
+			block.Paragraphs = append(block.Paragraphs, newSyntheticParagraph(orphanLines, orphanWords))
+		}
+		blocks = append(blocks, block)
 	}
 
 	return &Page{

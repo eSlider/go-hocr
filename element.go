@@ -33,6 +33,9 @@ func checkForNewProperties(el *v1_2.Element, list []string) []string {
 	l := len(list)
 	sort.Strings(list)
 	for k, _ := range el.GetProperties() {
+		if k == "" {
+			continue // element without a title attribute yields an empty key
+		}
 		i := sort.SearchStrings(list, k)
 		if !(i < l && list[i] == k) {
 			r = append(r, k)

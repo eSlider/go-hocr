@@ -12,8 +12,11 @@ type Word struct {
 }
 
 func (w Word) GetText() string {
-	left := w.BoundingBox[0] / scaleFactor
-	top := w.BoundingBox[1] / scaleFactor
+	var left, top int
+	if len(w.BoundingBox) >= 2 {
+		left = w.BoundingBox[0] / scaleFactor
+		top = w.BoundingBox[1] / scaleFactor
+	}
 	return fmt.Sprintf( /** @lang HTML */ `<div style="left: %dpx; top:%dpx">%s</div>`, left, top, w.Text)
 }
 

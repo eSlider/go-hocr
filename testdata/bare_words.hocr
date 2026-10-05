@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name='ocr-system' content='tesseract 5.3.0' />
+    <meta name='ocr-capabilities' content='ocr_page ocr_carea ocr_par ocrx_word ocrp_wconf'/>
+  </head>
+  <body>
+    <div class='ocr_page' id='page_1' title='image "sample.png"; bbox 0 0 595 842; ppageno 0; scan_res 300 300'>
+      <div class='ocr_carea' id='block_1_4' title="bbox 100 10 400 60">
+        <p class='ocr_par' id='par_1_4' lang='eng' title="bbox 100 10 320 40">
+          <span class='ocrx_word' id='word_1_11' title='bbox 100 10 180 20; x_wconf 84'>Example</span>
+          <span class='ocrx_word' id='word_1_12' title='bbox 190 10 250 21; x_wconf 79' lang='deu'>Corp</span>
+          <span class='ocrx_word' id='word_1_13' title='bbox 260 10 290 21; x_wconf 80' lang='deu'>Legal</span>
+          <span class='ocrx_word' id='word_1_14' title='bbox 300 10 320 21; x_wconf 82' lang='deu'>Form</span>
+          <span class='ocrx_word' id='word_1_15' title='bbox 100 25 250 35; x_wconf 39' lang='deu'>DE00000000000000000000</span>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

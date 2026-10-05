@@ -61,16 +61,29 @@ func NewBlock(el *v1_2.Element) *Block {
 		"bbox",
 	})
 
-	// Content area block has at least one element and normally an 'p' element
+	// Content area block has at least one element and normally an 'p' element.
+	// Some engines/PSM modes skip the ocr_par wrapper and place ocr_line or
+	// ocrx_word directly under the content area; wrap those into an equivalent
+	// paragraph branch instead of dropping them.
 	var paragraphs []*Paragraph
 
 	if el.IsContentArea() {
+		var orphanLines []*Line
+		var orphanWords []*Word
 		for _, sub := range el.GetElements() {
-			if sub.IsParagraph() {
+			switch {
+			case sub.IsParagraph():
 				paragraphs = append(paragraphs, NewParagraph(sub))
-			} else {
+			case sub.IsLine():
+				orphanLines = append(orphanLines, NewLine(sub))
+			case sub.IsWord():
+				orphanWords = append(orphanWords, NewWord(sub))
+			default:
 				fmt.Println("Found not a paragraph in block:", sub)
 			}
+		}
+		if len(orphanLines) > 0 || len(orphanWords) > 0 {
+			paragraphs = append(paragraphs, newSyntheticParagraph(orphanLines, orphanWords))
 		}
 	} else if el.IsPhoto() {
 	} else if el.IsSeparator() {

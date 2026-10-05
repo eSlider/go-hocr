@@ -144,6 +144,15 @@ Supported element types:
 - `ocrx_word` — words with bounding boxes and confidence (`x_wconf`)
 - `ocr_separator` / `ocr_photo` — layout separators and images
 
+### Structural tolerance
+
+Tesseract PSM modes (e.g. PSM 3) do not always emit the full
+`ocr_carea > ocr_par > ocr_line > ocrx_word` hierarchy. `ocrx_word` elements may
+appear directly under `ocr_par`, or `ocr_par`/`ocr_line` may be placed directly
+under `ocr_page`. The parser tolerates these forms: bare words are grouped into
+synthesised lines by vertical bbox overlap (word order by x), and missing
+wrappers are rebuilt, so no recognised text is dropped.
+
 ---
 
 ## Related Libraries
